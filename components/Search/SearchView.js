@@ -13,7 +13,7 @@ import {
 export default function SearchView() {
   const apiKey = "http://www.omdbapi.com/?i=tt3896198&apikey=ac3c3801";
   const [state, setState] = useState({
-    s: "Entrez un nom",
+    s: "",
     results: [],
     selected: {},
   });
@@ -30,9 +30,10 @@ export default function SearchView() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>TITLE</Text>
+      <Text style={styles.title}>TITRE</Text>
       <TextInput
         style={styles.search}
+        placeholder="Entrez un nom"
         onChangeText={(text) =>
           setState((prevState) => {
             return { ...prevState, s: text };
@@ -41,24 +42,23 @@ export default function SearchView() {
         onSubmitEditing={search}
         value={state.s}
       />
+      <Button style={styles.btnSearch} title="Search" onPress={search} />
 
       <FlatList
         data={state.results}
-        renderItem={(result) => 
-          (
+        renderItem={(result) => (
           <View style={styles.result}>
-            <Image 
-              source={{uri: result.item.Poster}}
+            <Image
+              source={{ uri: result.item.Poster }}
               style={{
-                width:"100%",
-                height:300
+                width: "100%",
+                height: 300,
               }}
               resizeMode="cover"
             />
             <Text style={styles.heading}> {result.item.Title}</Text>
           </View>
-        )
-        }
+        )}
         keyExtractor={(result) => result.imdbID}
       />
     </View>
@@ -102,5 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
   },
+  btnSearch: {
+    marginBottom: 20,
+  },
 });
-

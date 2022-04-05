@@ -19,29 +19,28 @@ export default class HomeScreen extends React.Component {
       note: 0,
       movies: [
         {
-          name: "Harry Potter à l'école des sorciers",
-          description: "Un film très intéressant, qui mérite d'être vu par tous",
-          note: 8,
+          name: "Transformers",
+          description: "Un film très intéressant",
+          note: 5,
         },
       ],
     };
   }
 
   setName = (text) => {
-      this.setState({
-        name: text,
-      });
+    this.setState({
+      name: text,
+    });
   };
 
   setDescription = (text) => {
-      this.setState({
-        description: text,
-      });
+    this.setState({
+      description: text,
+    });
   };
 
   setNote = (text) => {
-    const number = /^[0-9\b]+$/;
-    if (text === '' || number.test(text)) {
+    if (text >= 0 && text <= 5 && text.length <= 1) {
       this.setState({
         note: text,
       });
@@ -52,7 +51,8 @@ export default class HomeScreen extends React.Component {
     if (
       this.state.name.length >= 1 &&
       this.state.description.length >= 1 &&
-      this.state.note != '' && this.state.note <= 10
+      this.state.note >= 0 &&
+      this.state.note <= 5
     ) {
       let movie = {
         name: this.state.name,
@@ -64,8 +64,7 @@ export default class HomeScreen extends React.Component {
         isCreating: false,
         movies: newMovies,
       }));
-    } 
-    else {
+    } else {
       alert("Erreur de saisie, Veuillez réessayer");
     }
   };
@@ -93,16 +92,17 @@ export default class HomeScreen extends React.Component {
         <Text style={styles.label}>Description :</Text>
         <TextInput
           style={styles.input}
-          multiline = {true}
-          numberOfLines = {4}
+          multiline={true}
+          numberOfLines={4}
           maxLength={50}
           onChangeText={this.setDescription}
         />
-        <Text style={styles.label}>Note (max:10) :</Text>
+        <Text style={styles.label}>Note /5 :</Text>
         <TextInput
-          keyboardType = 'numeric'
+          keyboardType="numeric"
           style={styles.input}
-          maxLength={2}
+          maxLength={1}
+          value={this.state.note}
           onChangeText={this.setNote}
         />
         <Button title="Ajouter" onPress={this.submit} />
@@ -114,7 +114,6 @@ export default class HomeScreen extends React.Component {
           <View>
             <Text style={styles.item}>Nom | Description | Note</Text>
           </View>
-
         </View>
         <SafeAreaView>
           <FlatList
@@ -207,6 +206,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    textColor: "#000000"
-  }
+    textColor: "#000000",
+  },
 });

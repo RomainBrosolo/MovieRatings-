@@ -16,10 +16,10 @@ const App = () => {
             let iconName;
             switch (route.name) {
               case "Avis":
-                iconName = focused ? "star" : "star-outline";
+                iconName = "star";
                 break;
               case "Recherche":
-                iconName = focused ? "search" : "search-outline";
+                iconName = "search-outline";
                 break;
               default:
                 iconName = "ban";
